@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кредитный калькулятор</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <img src="logo.png" alt="Логотип">
+    <h2>Кредитный калькулятор</h2>
+</header>
+<div class="container">
+    <form id="loanForm">
+        <label for="loanAmount">Сумма кредита (в тенге):</label>
+        <input type="text" id="loanAmount" required oninput="formatCurrency(this)"><br>
+        <label for="initialPayment">Первоначальный взнос (в тенге):</label>
+        <input type="text" id="initialPayment" required oninput="formatCurrency(this)"><br>
+        <label for="loanTerm">Срок кредита (в годах):</label>
+        <input type="number" id="loanTerm" required><br>
+        <label for="interestRate">Процентная ставка (%):</label>
+        <input type="text" id="interestRate" required pattern="[0-9]+([\.,][0-9]+)?" title="Введите число, например: 18 или 18.5"><br>
+        <button type="submit" id="calculateButton">Рассчитать</button>
+    </form>
+    <div id="loadingAnimation"></div> <!-- Новый элемент для анимации -->
+    <div id="result"></div> <!-- Новый элемент для вывода результата -->
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
