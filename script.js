@@ -7,26 +7,44 @@ function formatCurrency(input) {
 document.getElementById("loanForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    // Добавляем анимацию при нажатии на кнопку
-    document.getElementById("loadingAnimation").innerHTML = '<div class="spinner"></div>';
+    var overlay = document.getElementById("overlay");
+    overlay.style.display = "flex"; // Показываем оверлей
 
-    var loanAmount = parseFloat(document.getElementById("loanAmount").value.replace(/\D/g, ''));
-    var initialPayment = parseFloat(document.getElementById("initialPayment").value.replace(/\D/g, ''));
-    var totalLoanAmount = loanAmount - initialPayment;
-    var loanTerm = parseInt(document.getElementById("loanTerm").value);
-    var interestRate = parseFloat(document.getElementById("interestRate").value);
+    var submitButton = document.querySelector('button[type="submit"]');
+    submitButton.disabled = true; // Отключаем кнопку во время загрузки
 
-    var monthlyInterestRate = (interestRate / 100) / 12;
-    var loanTermMonths = loanTerm * 12;
-    var numerator = totalLoanAmount * monthlyInterestRate;
-    var denominator = 1 - Math.pow(1 + monthlyInterestRate, -loanTermMonths);
-    var monthlyPayment = numerator / denominator;
+    var fullName = document.getElementById("fullName").value;
+    var dateOfBirth = document.getElementById("dateOfBirth").value;
+    var desiredAmount = parseFloat(document.getElementById("desiredAmount").value.replace(/\D/g, ''));
+    var creditBurden = parseFloat(document.getElementById("creditBurden").value.replace(/\D/g, ''));
+    var pensionContributions = parseFloat(document.getElementById("pensionContributions").value.replace(/\D/g, ''));
 
-    setTimeout(function() {
-        // Удаляем анимацию после выполнения расчетов
-        document.getElementById("loadingAnimation").innerHTML = '';
+    // Рассчитываем максимальную сумму кредита
+    // Больший процент от пенсионных отчислений увеличивает максимальную сумму кредита
+    var maxLoanAmount = desiredAmount - creditBurden + (pensionContributions * 6 * 2);
 
-        // Выводим результат расчета крупным шрифтом
-        document.getElementById("result").innerText = "Ежемесячный платеж: " + monthlyPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " тенге";
-    }, 1000);
+    // Отправляем данные на сервер
+    var formData = new FormData();
+    formData.append('fullName', fullName);
+    formData.append('dateOfBirth', dateOfBirth);
+    formData.append('desiredAmount', desiredAmount);
+    formData.append('creditBurden', creditBurden);
+    formData.append('pensionContributions', pensionContributions);
+    formData.append('maxLoanAmount', maxLoanAmount);
+
+    fetch('https://script.google.com/macros/s/AKfycbxGh8pH6EOSuN6Ys0vov4Bex-pnyd43S1or2w81LTZoZWM8-nG7sDwyxA9OKs5DXsh4/exec', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+        submitButton.disabled = false; // Включаем кнопку после загрузки
+        overlay.style.display = "none"; // Скрываем оверлей
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        submitButton.disabled = false; // Включаем кнопку после загрузки
+        overlay.style.display = "none"; // Скрываем оверлей
+    });
 });
