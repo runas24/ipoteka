@@ -26,14 +26,11 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
-        // Получаем ID созданного документа
-        var documentId = data.trim();
-        var viewResultButton = document.getElementById("viewResultButton");
-        viewResultButton.innerHTML = '<a href="https://docs.google.com/document/d/' + documentId + '" target="_blank">Посмотреть результат</a>';
-        viewResultButton.style.display = "block"; // Показываем кнопку "Посмотреть результат"
-        document.getElementById("resultMessage").textContent = "Документ успешно создан.";
+        document.getElementById("resultMessage").textContent = data.message;
+        document.getElementById("viewResultButton").style.display = "block"; // Показываем кнопку "Посмотреть результат"
+        document.getElementById("viewResultButton").href = data.docUrl; // Устанавливаем ссылку на документ
     })
     .catch(error => {
         console.error('Error:', error);
