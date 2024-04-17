@@ -4,14 +4,6 @@ function formatCurrency(input) {
     input.value = formattedValue;
 }
 
-function allowOnlyNumbers(input) {
-    input.value = input.value.replace(/[^\d]/g, ''); // Заменяем все символы, кроме цифр, на пустую строку
-}
-
-function isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-}
-
 document.getElementById("loanForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -37,37 +29,10 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     .then(response => response.text())
     .then(data => {
         document.getElementById("resultMessage").textContent = data;
-        if (isMobileDevice()) {
-            document.getElementById("viewResult").style.display = "inline"; // Показываем кнопку "Посмотреть результат" только на мобильных устройствах
-            document.getElementById("viewResult").setAttribute("href", "https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8");
-        }
+        document.getElementById("viewResult").style.display = "inline"; // Показываем кнопку "Посмотреть результат"
+        document.getElementById("viewResult").setAttribute("href", "https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8");
     })
     .catch(error => {
         console.error('Error:', error);
     });
-});
-
-// Добавляем обработчики событий для полей ввода суммы, кредитной нагрузки и пенсионных отчислений
-document.getElementById("desiredAmount").addEventListener("input", function() {
-    if (isMobileDevice()) {
-        allowOnlyNumbers(this);
-    } else {
-        formatCurrency(this);
-    }
-});
-
-document.getElementById("creditBurden").addEventListener("input", function() {
-    if (isMobileDevice()) {
-        allowOnlyNumbers(this);
-    } else {
-        formatCurrency(this);
-    }
-});
-
-document.getElementById("pensionContributions").addEventListener("input", function() {
-    if (isMobileDevice()) {
-        allowOnlyNumbers(this);
-    } else {
-        formatCurrency(this);
-    }
 });
