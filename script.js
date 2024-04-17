@@ -29,8 +29,7 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     .then(response => response.text())
     .then(data => {
         document.getElementById("resultMessage").textContent = data;
-        document.getElementById("viewResult").style.display = "inline"; // Показываем кнопку "Посмотреть результат"
-        document.getElementById("viewResult").setAttribute("href", "https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8");
+        document.getElementById("viewResultButton").style.display = "block"; // Показываем кнопку "Посмотреть результат"
     })
     .catch(error => {
         console.error('Error:', error);
