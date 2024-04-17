@@ -20,7 +20,7 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     var formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("loanDate", loanDate);
-    formData.append("maxLoanAmount", maxLoanAmount);
+    formData.append("maxLoanAmount", maxLoanAmount.toLocaleString('ru-RU')); // Форматируем число с разделением пробелом
 
     // Показываем анимированную загрузку
     var loader = document.getElementById("loader");
