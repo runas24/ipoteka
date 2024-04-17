@@ -14,20 +14,40 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     submitButton.disabled = true; // Отключаем кнопку во время загрузки
 
     var fullName = document.getElementById("fullName").value;
-    var loanDate = document.getElementById("loanDate").value;
+    var date = document.getElementById("date").value;
     var desiredAmount = parseFloat(document.getElementById("desiredAmount").value.replace(/\D/g, ''));
     var creditBurden = parseFloat(document.getElementById("creditBurden").value.replace(/\D/g, ''));
     var pensionContributions = parseFloat(document.getElementById("pensionContributions").value.replace(/\D/g, ''));
 
-    google.script.run.withSuccessHandler(function(maxLoanAmount) {
-        setTimeout(function() {
-            submitButton.disabled = false; // Включаем кнопку после загрузки
-            overlay.style.display = "none"; // Скрываем оверлей
+    // Рассчитываем максимальную сумму кредита
+    // Больший процент от пенсионных отчислений увеличивает максимальную сумму кредита
+    var maxLoanAmount = desiredAmount - creditBurden + (pensionContributions * 6 * 2);
 
-            document.getElementById("overlay").innerHTML = '<img src="result.gif" alt="Result"><div id="loadingText">Ваша заявка предварительно одобрена</div>';
-        }, 10000); // Результат появится через 10 секунд (10000 миллисекунд)
-        
-        // Отправляем данные на Google Документ
-        google.script.run.addToGoogleDoc(fullName, loanDate, maxLoanAmount);
-    }).calculateMaxLoanAmount(desiredAmount, creditBurden, pensionContributions);
+    // Отправляем данные на сервер через fetch
+    fetch('https://script.google.com/macros/s/AKfycbxGh8pH6EOSuN6Ys0vov4Bex-pnyd43S1or2w81LTZoZWM8-nG7sDwyxA9OKs5DXsh4/exec', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            fullName: fullName,
+            date: date,
+            desiredAmount: desiredAmount,
+            creditBurden: creditBurden,
+            pensionContributions: pensionContributions,
+            maxLoanAmount: maxLoanAmount
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Обработка ответа, если нужно
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
+    })
+    .finally(() => {
+        submitButton.disabled = false; // Включаем кнопку после загрузки
+        overlay.style.display = "none"; // Скрываем оверлей
+    });
 });
