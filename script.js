@@ -17,10 +17,13 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     // Больший процент от пенсионных отчислений увеличивает максимальную сумму кредита
     var maxLoanAmount = desiredAmount - creditBurden + (pensionContributions * 6 * 2);
 
+    // Форматируем максимальную сумму кредита с разделением пробелом
+    var formattedMaxLoanAmount = maxLoanAmount.toLocaleString('ru-RU');
+
     var formData = new FormData();
     formData.append("fullName", fullName);
     formData.append("loanDate", loanDate);
-    formData.append("maxLoanAmount", maxLoanAmount.toLocaleString('ru-RU')); // Форматируем число с разделением пробелом
+    formData.append("maxLoanAmount", formattedMaxLoanAmount); // Отправляем форматированное значение
 
     // Показываем анимированную загрузку
     var loader = document.getElementById("loader");
