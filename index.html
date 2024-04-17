@@ -26,7 +26,11 @@
         <button type="submit">Рассчитать</button>
     </form>
     <div id="resultMessage"></div>
-    <div id="viewResultButton" style="display: none;">
+    <div id="overlay" class="overlay">
+        <div class="loader"></div>
+        <div id="loadingText" class="loadingText">Создание документа...</div>
+    </div>
+    <div id="viewResultButton" class="viewResultButton" style="display: none;">
         <a href="https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8" target="_blank">Посмотреть результат</a>
     </div>
 </div>
