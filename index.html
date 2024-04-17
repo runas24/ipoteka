@@ -18,15 +18,15 @@
         <label for="loanDate">Дата:</label>
         <input type="date" id="loanDate" required><br>
         <label for="desiredAmount">Желаемая сумма кредита (в тенге):</label>
-        <input type="text" id="desiredAmount" required oninput="formatCurrency(this)" pattern="[0-9]*"><br>
+        <input type="text" id="desiredAmount" required oninput="formatCurrency(this)"><br>
         <label for="creditBurden">Кредитная нагрузка (в тенге):</label>
-        <input type="text" id="creditBurden" required oninput="formatCurrency(this)" pattern="[0-9]*"><br>
+        <input type="text" id="creditBurden" required oninput="formatCurrency(this)"><br>
         <label for="pensionContributions">Пенсионные отчисления за полгода (в тенге):</label>
-        <input type="text" id="pensionContributions" required oninput="formatCurrency(this)" pattern="[0-9]*"><br>
+        <input type="text" id="pensionContributions" required oninput="formatCurrency(this)"><br>
         <button type="submit">Рассчитать</button>
     </form>
     <div id="resultMessage"></div>
-    <a id="viewResult" href="#" style="display: none;">Посмотреть результат</a>
+    <a id="viewResult" href="#" style="display: none;" target="_blank">Посмотреть результат</a>
 </div>
 
 <script src="script.js"></script>
