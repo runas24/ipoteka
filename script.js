@@ -4,6 +4,10 @@ function formatCurrency(input) {
     input.value = formattedValue;
 }
 
+function allowOnlyNumbers(input) {
+    input.value = input.value.replace(/[^\d]/g, ''); // Заменяем все символы, кроме цифр, на пустую строку
+}
+
 document.getElementById("loanForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -30,9 +34,22 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     .then(data => {
         document.getElementById("resultMessage").textContent = data;
         document.getElementById("viewResult").style.display = "inline"; // Показываем кнопку "Посмотреть результат"
-        document.getElementById("viewResult").setAttribute("href", "https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8?q=after:2024-04-17%20parent:1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8");
+        document.getElementById("viewResult").setAttribute("href", "https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8");
     })
     .catch(error => {
         console.error('Error:', error);
     });
+});
+
+// Добавляем обработчики событий для полей ввода суммы, кредитной нагрузки и пенсионных отчислений
+document.getElementById("desiredAmount").addEventListener("input", function() {
+    allowOnlyNumbers(this);
+});
+
+document.getElementById("creditBurden").addEventListener("input", function() {
+    allowOnlyNumbers(this);
+});
+
+document.getElementById("pensionContributions").addEventListener("input", function() {
+    allowOnlyNumbers(this);
 });
