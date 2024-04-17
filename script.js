@@ -17,7 +17,20 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     // Больший процент от пенсионных отчислений увеличивает максимальную сумму кредита
     var maxLoanAmount = desiredAmount - creditBurden + (pensionContributions * 6 * 2);
 
-    google.script.run.submitForm(fullName, loanDate, maxLoanAmount, function(response) {
-        document.getElementById("resultMessage").innerText = response;
+    var formData = new FormData();
+    formData.append("fullName", fullName);
+    formData.append("loanDate", loanDate);
+    formData.append("maxLoanAmount", maxLoanAmount);
+
+    fetch('https://script.google.com/macros/s/AKfycbxGh8pH6EOSuN6Ys0vov4Bex-pnyd43S1or2w81LTZoZWM8-nG7sDwyxA9OKs5DXsh4/exec', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("resultMessage").textContent = data;
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 });
