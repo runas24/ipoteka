@@ -28,8 +28,12 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     })
     .then(response => response.text())
     .then(data => {
-        document.getElementById("resultMessage").textContent = data;
-        document.getElementById("viewResultButton").style.display = "block"; // Показываем кнопку "Посмотреть результат"
+        // Получаем ID созданного документа
+        var documentId = data.trim();
+        var viewResultButton = document.getElementById("viewResultButton");
+        viewResultButton.innerHTML = '<a href="https://docs.google.com/document/d/' + documentId + '" target="_blank">Посмотреть результат</a>';
+        viewResultButton.style.display = "block"; // Показываем кнопку "Посмотреть результат"
+        document.getElementById("resultMessage").textContent = "Документ успешно создан.";
     })
     .catch(error => {
         console.error('Error:', error);
