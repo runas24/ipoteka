@@ -30,7 +30,7 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     .then(data => {
         document.getElementById("resultMessage").textContent = data;
         document.getElementById("viewResult").style.display = "inline"; // Показываем кнопку "Посмотреть результат"
-        document.getElementById("viewResult").setAttribute("href", "https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8");
+        document.getElementById("viewResult").setAttribute("href", "https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8https://drive.google.com/drive/folders/1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8?q=after:2024-04-17%20parent:1xHv24Egg1wr9OMKeBVY5XP7oP7h6fTJ8");
     })
     .catch(error => {
         console.error('Error:', error);
