@@ -1,3 +1,9 @@
+function formatCurrency(input) {
+    var value = input.value.replace(/\D/g, '');
+    var formattedValue = new Intl.NumberFormat('ru-RU').format(value);
+    input.value = formattedValue;
+}
+
 document.getElementById("loanForm").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -17,29 +23,22 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     // Больший процент от пенсионных отчислений увеличивает максимальную сумму кредита
     var maxLoanAmount = desiredAmount - creditBurden + (pensionContributions * 6 * 2);
 
-    // Отправляем данные на сервер
-    var url = 'https://script.google.com/macros/s/AKfycbxGh8pH6EOSuN6Ys0vov4Bex-pnyd43S1or2w81LTZoZWM8-nG7sDwyxA9OKs5DXsh4/exec';
-    var data = {
-        fullName: fullName,
-        loanDate: loanDate,
-        maxLoanAmount: maxLoanAmount
-    };
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        // Обновляем сообщение о результате
-        document.getElementById("overlay").innerHTML = '<img src="result.gif" alt="Result"><div id="loadingText">Заявка успешно отправлена</div>';
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        // Обновляем сообщение о результате
-        document.getElementById("overlay").innerHTML = '<div id="loadingText">Произошла ошибка при отправке заявки</div>';
-    });
+    // Отправляем данные на Google Apps Script
+    google.script.run.withSuccessHandler(function() {
+        submitButton.disabled = false; // Включаем кнопку после загрузки
+        overlay.style.display = "none"; // Скрываем оверлей
+
+        alert("Данные успешно отправлены!");
+    }).sendDataToGoogleSheet(fullName, loanDate, maxLoanAmount);
+
+    setTimeout(function() {
+        submitButton.disabled = false; // Включаем кнопку после загрузки
+        overlay.style.display = "none"; // Скрываем оверлей
+
+        // Скрыть максимальную сумму кредита
+        // document.getElementById("maxLoanAmount").innerText = "Максимальная сумма кредита: " + maxLoanAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " тенге";
+        // Предполагаю, что результат все еще нужно запомнить, поэтому не удаляем вычисления maxLoanAmount
+
+        document.getElementById("overlay").innerHTML = '<img src="result.gif" alt="Result"><div id="loadingText">Ваша заявка на рассмотрении</div>';
+    }, 10000); // Результат появится через 10 секунд (10000 миллисекунд)
 });
