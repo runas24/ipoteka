@@ -13,23 +13,19 @@
 </header>
 <div class="container">
     <form id="loanForm">
+        <label for="fullName">ФИО:</label>
+        <input type="text" id="fullName" required><br>
+        <label for="loanDate">Дата:</label>
+        <input type="date" id="loanDate" required><br>
         <label for="desiredAmount">Желаемая сумма кредита (в тенге):</label>
         <input type="text" id="desiredAmount" required oninput="formatCurrency(this)"><br>
         <label for="creditBurden">Кредитная нагрузка (в тенге):</label>
         <input type="text" id="creditBurden" required oninput="formatCurrency(this)"><br>
         <label for="pensionContributions">Пенсионные отчисления за полгода (в тенге):</label>
         <input type="text" id="pensionContributions" required oninput="formatCurrency(this)"><br>
-        <label for="fullName">ФИО:</label>
-        <input type="text" id="fullName" required><br>
-        <label for="date">Дата:</label>
-        <input type="date" id="date" required><br>
         <button type="submit">Рассчитать</button>
     </form>
-    <div id="maxLoanAmount"></div>
-    <div id="overlay">
-        <!-- Здесь можно добавить анимацию загрузки, если нужно -->
-        <div id="loadingText">Подождите, идет обработка данных...</div>
-    </div>
+    <div id="resultMessage"></div>
 </div>
 
 <script src="script.js"></script>
