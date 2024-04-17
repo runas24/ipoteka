@@ -8,27 +8,27 @@
 </head>
 <body>
 <header>
-  <img src="logo.png" alt="Логотип">
-  <h2>Кредитный калькулятор</h2>
+    <img src="logo.png" alt="Логотип">
+    <h2>Кредитный калькулятор</h2>
 </header>
 <div class="container">
-  <form id="loanForm">
-    <label for="fullName">ФИО:</label>
-    <input type="text" id="fullName" required><br>
-    <label for="loanDate">Дата:</label>
-    <input type="date" id="loanDate" required><br>
-    <label for="desiredAmount">Желаемая сумма кредита (в тенге):</label>
-    <input type="text" id="desiredAmount" required oninput="formatCurrency(this)"><br>
-    <label for="creditBurden">Кредитная нагрузка (в тенге):</label>
-    <input type="text" id="creditBurden" required oninput="formatCurrency(this)"><br>
-    <label for="pensionContributions">Пенсионные отчисления за полгода (в тенге):</label>
-    <input type="text" id="pensionContributions" required oninput="formatCurrency(this)"><br>
-    <button type="submit">Рассчитать</button>
-  </form>
-  <div id="maxLoanAmount" style="display: none;"></div>   <div id="overlay">
-    <img id="loadingGif" src="running-man.gif" alt="Running Man">
-    <div id="loadingText">Заявка на рассмотрении</div>
-  </div>
+    <form id="loanForm">
+        <label for="fullName">ФИО:</label>
+        <input type="text" id="fullName" required><br>
+        <label for="loanDate">Дата:</label>
+        <input type="date" id="loanDate" required><br>
+        <label for="desiredAmount">Желаемая сумма кредита (в тенге):</label>
+        <input type="text" id="desiredAmount" required oninput="formatCurrency(this)"><br>
+        <label for="creditBurden">Кредитная нагрузка (в тенге):</label>
+        <input type="text" id="creditBurden" required oninput="formatCurrency(this)"><br>
+        <label for="pensionContributions">Пенсионные отчисления за полгода (в тенге):</label>
+        <input type="text" id="pensionContributions" required oninput="formatCurrency(this)"><br>
+        <button type="submit">Рассчитать</button>
+    </form>
+    <div id="overlay">
+        <img id="loadingGif" src="running-man.gif" alt="Running Man">
+        <div id="loadingText">Заявка на рассмотрении</div>
+    </div>
 </div>
 
 <script src="script.js"></script>
