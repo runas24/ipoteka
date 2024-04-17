@@ -34,20 +34,24 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
            maxLoanAmount: maxLoanAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, " ")
        }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Произошла ошибка при отправке запроса.');
+        }
+        return response.json();
+    })
     .then(data => {
-       if (data.success) {
-           console.log('Документ успешно создан!');
-       } else {
-           console.error('Ошибка при создании документа!');
-       }
+        if (data.success) {
+            console.log('Данные успешно отправлены.');
+        } else {
+            console.error('Ошибка при обработке данных на сервере:', data.error);
+        }
     })
     .catch(error => {
-       console.error('Произошла ошибка:', error);
-    });
-
-    setTimeout(function() {
+        console.error('Произошла ошибка:', error);
+    })
+    .finally(() => {
         submitButton.disabled = false; // Включаем кнопку после загрузки
         overlay.style.display = "none"; // Скрываем оверлей
-    }, 10000); // Результат появится через 10 секунд (10000 миллисекунд)
+    });
 });
