@@ -22,21 +22,12 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
     formData.append("loanDate", loanDate);
     formData.append("maxLoanAmount", maxLoanAmount);
 
-    // Показываем оверлей при отправке данных
-    var overlay = document.getElementById("overlay");
-    overlay.style.display = "flex";
+    // Показываем анимированную загрузку
+    var loader = document.getElementById("loader");
+    loader.style.display = "block";
 
     fetch('https://script.google.com/macros/s/AKfycbxGh8pH6EOSuN6Ys0vov4Bex-pnyd43S1or2w81LTZoZWM8-nG7sDwyxA9OKs5DXsh4/exec', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("resultMessage").textContent = data;
-        document.getElementById("viewResultButton").style.display = "block"; // Показываем кнопку "Посмотреть результат"
-        overlay.style.display = "none"; // Скрываем оверлей после создания документа
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-});
+    .then(response =>
