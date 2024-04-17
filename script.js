@@ -30,4 +30,14 @@ document.getElementById("loanForm").addEventListener("submit", function(event) {
         method: 'POST',
         body: formData
     })
-    .then(response =>
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("resultMessage").textContent = data;
+        document.getElementById("viewResultButton").style.display = "block"; // Показываем кнопку "Посмотреть результат"
+        loader.style.display = "none"; // Скрываем анимированную загрузку после завершения
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        loader.style.display = "none"; // Скрываем анимированную загрузку в случае ошибки
+    });
+});
